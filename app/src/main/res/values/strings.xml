@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Aplikasi Mendata Keluarga</string>
+    <string name="text_informasi">Informasi</string>
+    <string name="form_entry">Form Entry</string>
+    <string name="lihat_data">Lihat Data</string>
+    <string name="keluar">Keluar</string>
+    <string name="aplikasi_kpu">Aplikasi KPU</string>
+    <string name="pengisian_data">Silahkan isi data di bawah :</string>
+</resources>
