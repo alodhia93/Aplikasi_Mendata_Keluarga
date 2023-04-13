@@ -67,23 +67,15 @@ public class FormEntry extends AppCompatActivity implements LocationListener {
             },100);
         }
 
-        btn_alamat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLocation();
-            }
-        });
+        btn_alamat.setOnClickListener(view -> getLocation());
 
-        btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                try {
-                    if (txt_id.getText().toString().equals("")) {
-                        save();
-                    }
-                } catch (Exception e){
-                    Log.e("Submit", e.toString());
+        btn_submit.setOnClickListener(v -> {
+            try {
+                if (txt_id.getText().toString().equals("Data Saved")) {
+                    save();
                 }
+            } catch (Exception e){
+                Log.e("Submit", e.toString());
             }
         });
         btn_cancel.setOnClickListener(new View.OnClickListener() {  @Override
