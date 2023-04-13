@@ -6,4 +6,6 @@
     <string name="keluar">Keluar</string>
     <string name="aplikasi_kpu">Aplikasi KPU</string>
     <string name="pengisian_data">Silahkan isi data di bawah :</string>
+    <string name="get_location">Get Location</string>
+    <string name="masukkan_alamat">Koordinat Alamat</string>
 </resources>

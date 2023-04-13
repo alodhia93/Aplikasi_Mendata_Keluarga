@@ -52,14 +52,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textSize="14sp" />
-    <EditText
+    <TextView
         android:id="@+id/alamat_tinggal"
-        android:hint="Masukkan alamat"
+        android:hint="@string/masukkan_alamat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textSize="14sp"
         android:layout_marginBottom="14dp"/>
+    <Button
+        android:id="@+id/buttonAlamat"
+        android:layout_marginTop="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/get_location"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
