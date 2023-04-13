@@ -1,11 +1,5 @@
 package com.mfrido.aplikasimendatakeluarga;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
@@ -16,25 +10,27 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.mfrido.aplikasimendatakeluarga.adapter.Adapter;
 import com.mfrido.aplikasimendatakeluarga.helper.DbHelper;
 import com.mfrido.aplikasimendatakeluarga.model.Data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 public class FormEntry extends AppCompatActivity implements LocationListener {
 
-    List<Data> itemList = new ArrayList<Data>();
+    List<Data> itemList = new ArrayList<>();
     Adapter adapter;
     DbHelper SQLite = new DbHelper(this);
     Button btn_submit, btn_cancel, btn_alamat;
@@ -78,11 +74,9 @@ public class FormEntry extends AppCompatActivity implements LocationListener {
                 Log.e("Submit", e.toString());
             }
         });
-        btn_cancel.setOnClickListener(new View.OnClickListener() {  @Override
-        public void onClick(View v) {
+        btn_cancel.setOnClickListener(v -> {
             blank();
             finish();
-        }
         });
     }
 
