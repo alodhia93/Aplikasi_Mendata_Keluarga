@@ -12,7 +12,7 @@ public class InformasiPemilu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informasi_pemilu);
         WebView webView = findViewById(R.id.webViewPemilu);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("https://infopemilu.kpu.go.id/Pemilu/Peserta_pemilu");
+
+        webView.loadUrl("put link here");
     }
 }

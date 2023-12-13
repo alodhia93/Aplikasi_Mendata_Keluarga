@@ -1,64 +1,58 @@
-package com.mfrido.aplikasimendatakeluarga;
+package com.mfrido.aplikasimendatakeluarga
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle
+import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.size
+import com.mfrido.aplikasimendatakeluarga.adapter.Adapter
+import com.mfrido.aplikasimendatakeluarga.helper.DbHelper
+import com.mfrido.aplikasimendatakeluarga.model.Data
 
-import android.content.Intent;
-import android.os.Bundle;
-import com.mfrido.aplikasimendatakeluarga.adapter.Adapter;
-
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-
-import com.mfrido.aplikasimendatakeluarga.helper.DbHelper;
-import com.mfrido.aplikasimendatakeluarga.model.Data;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-public class DataPemilih extends AppCompatActivity {
-    ListView listView;
-    DbHelper SQLite = new DbHelper(this);
-    Adapter adapterView;
-    List<Data> itemList = new ArrayList<Data>();
-    public static final String TAG_ID = "id";
-    public static final String TAG_NIK = "nik";
-    public static final String TAG_NAMA = "nama";
-    public static final String TAG_NOHP = "nohp";
-    public static final String TAG_JENIS_KELAMIN = "jenis_kelamin";
-    public static final String TAG_TANGGAL = "tgl_sensus";
-    public static final String TAG_ALAMAT = "alamat";
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_data_pemilih);
-        listView = findViewById(R.id.list_view);
-        adapterView = new Adapter(DataPemilih.this, itemList);
-        listView.setAdapter(adapterView);
-        getAllData();
+class DataPemilih : AppCompatActivity() {
+    private lateinit var listView: ListView
+    private var sqlite = DbHelper(this)
+    private var adapterView: Adapter? = null
+    private var itemList: MutableList<Data> = ArrayList()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_data_pemilih)
+        listView = findViewById(R.id.list_view)
+        adapterView = Adapter(this@DataPemilih, itemList)
+        listView.adapter = adapterView
+        allData
     }
-    private void getAllData() {
-        ArrayList<HashMap<String, String>> row = SQLite.getAllData();
-        for (int i = 0; i < row.size(); i++) {
-            String id = row.get(i).get(TAG_ID);
-            String nik = row.get(i).get(TAG_NIK);
-            String nama = row.get(i).get(TAG_NAMA);
-            String nohp = row.get(i).get(TAG_NOHP);
-            String jk = row.get(i).get(TAG_JENIS_KELAMIN);
-            String tgl = row.get(i).get(TAG_TANGGAL);
-            String alamat = row.get(i).get(TAG_ALAMAT);
-            Data data = new Data();
-            data.setId(id);
-            data.setNik(nik);
-            data.setNama(nama);
-            data.setNohp(nohp);
-            data.setJenis_kelamin(jk);
-            data.setTgl_sensus(tgl);
-            data.setAlamat(alamat);
-            itemList.add(data);
+
+    private val allData: Unit
+        get() {
+            val row = sqlite.allData
+            for (i in row.indices) {
+                val id = row[i][TAG_ID]
+                val nik = row[i][TAG_NIK]
+                val nama = row[i][TAG_NAMA]
+                val nohp = row[i][TAG_NOHP]
+                val jk = row[i][TAG_JENIS_KELAMIN]
+                val tgl = row[i][TAG_TANGGAL]
+                val alamat = row[i][TAG_ALAMAT]
+                val data = Data()
+                data.id = id
+                data.nik = nik
+                data.nama = nama
+                data.nohp = nohp
+                data.jenis_kelamin = jk
+                data.tgl_sensus = tgl
+                data.alamat = alamat
+                itemList.add(data)
+            }
+            adapterView!!.notifyDataSetChanged()
         }
-        adapterView.notifyDataSetChanged();
+
+    companion object {
+        const val TAG_ID = "id"
+        const val TAG_NIK = "nik"
+        const val TAG_NAMA = "nama"
+        const val TAG_NOHP = "nohp"
+        const val TAG_JENIS_KELAMIN = "jenis_kelamin"
+        const val TAG_TANGGAL = "tgl_sensus"
+        const val TAG_ALAMAT = "alamat"
     }
 }
