@@ -3,7 +3,6 @@ package com.mfrido.aplikasimendatakeluarga
 import android.os.Bundle
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.size
 import com.mfrido.aplikasimendatakeluarga.adapter.Adapter
 import com.mfrido.aplikasimendatakeluarga.helper.DbHelper
 import com.mfrido.aplikasimendatakeluarga.model.Data
@@ -38,8 +37,8 @@ class DataPemilih : AppCompatActivity() {
                 data.nik = nik
                 data.nama = nama
                 data.nohp = nohp
-                data.jenis_kelamin = jk
-                data.tgl_sensus = tgl
+                data.jenisKelamin = jk
+                data.tglSensus = tgl
                 data.alamat = alamat
                 itemList.add(data)
             }

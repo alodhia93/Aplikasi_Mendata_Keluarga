@@ -1,82 +1,85 @@
-package com.mfrido.aplikasimendatakeluarga.helper;
+package com.mfrido.aplikasimendatakeluarga.helper
 
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-public class DbHelper extends SQLiteOpenHelper {
-
-    private static final int DATABASE_VERSION = 2;
-    static final String DATABASE_NAME = "datakeluargabaru2.db";
-    public static final String TABLE_SQLite = "sqlite";
-    public static final String COLUMN_ID = "id";
-    public static final String COLUMN_NIK = "nik";
-    public static final String COLUMN_NAMA = "nama";
-    public static final String COLUMN_NOHP = "nohp";
-    public static final String COLUMN_JENIS_KELAMIN = "jenis_kelamin";
-    public static final String COLUMN_TANGGAL = "tgl_sensus";
-    public static final String COLUMN_ALAMAT = "alamat";
-    public DbHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE " +
-                TABLE_SQLite + " (" +  COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+class DbHelper(context: Context?) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+    override fun onCreate(sqLiteDatabase: SQLiteDatabase) {
+        val sqlCreateTable = "CREATE TABLE " +
+                TABLE_SQLite + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NIK + " TEXT NOT NULL, " +
                 COLUMN_NAMA + " TEXT NOT NULL, " +
                 COLUMN_NOHP + " TEXT NOT NULL, " +
-                COLUMN_JENIS_KELAMIN +" TEXT NOT NULL, " +
-                COLUMN_TANGGAL+" TEXT NOT NULL, " +
-                COLUMN_ALAMAT+" TEXT NOT NULL" +
-                " )";
-        sqLiteDatabase.execSQL(SQL_CREATE_MOVIE_TABLE);
+                COLUMN_JENIS_KELAMIN + " TEXT NOT NULL, " +
+                COLUMN_TANGGAL + " TEXT NOT NULL, " +
+                COLUMN_ALAMAT + " TEXT NOT NULL" +
+                " )"
+        sqLiteDatabase.execSQL(sqlCreateTable)
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SQLite);
-        onCreate(sqLiteDatabase);
+    override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, i: Int, i1: Int) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS $TABLE_SQLite")
+        onCreate(sqLiteDatabase)
     }
 
-    public ArrayList<HashMap<String, String>> getAllData(){
-        ArrayList<HashMap<String, String>> wordList;
-        wordList = new ArrayList<HashMap<String, String>>();
-        String selectQuery = "SELECT * FROM " + TABLE_SQLite;
-        SQLiteDatabase database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()){
-            do {
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put(COLUMN_ID, cursor.getString(0));
-                map.put(COLUMN_NIK, cursor.getString(1));
-                map.put(COLUMN_NAMA, cursor.getString(2));
-                map.put(COLUMN_NOHP, cursor.getString(3));
-                map.put(COLUMN_JENIS_KELAMIN, cursor.getString(4));
-                map.put(COLUMN_TANGGAL, cursor.getString(5));
-                map.put(COLUMN_ALAMAT, cursor.getString(6));
-                wordList.add(map);
-            }while (cursor.moveToNext());
+    val allData: ArrayList<HashMap<String, String>>
+        @SuppressLint("Recycle")
+        get() {
+            val wordList: ArrayList<HashMap<String, String>> = ArrayList()
+            val selectQuery = "SELECT * FROM $TABLE_SQLite"
+            val database = this.writableDatabase
+            val cursor = database.rawQuery(selectQuery, null)
+            if (cursor.moveToFirst()) {
+                do {
+                    val map = HashMap<String, String>()
+                    map[COLUMN_ID] = cursor.getString(0)
+                    map[COLUMN_NIK] = cursor.getString(1)
+                    map[COLUMN_NAMA] = cursor.getString(2)
+                    map[COLUMN_NOHP] = cursor.getString(3)
+                    map[COLUMN_JENIS_KELAMIN] = cursor.getString(4)
+                    map[COLUMN_TANGGAL] = cursor.getString(5)
+                    map[COLUMN_ALAMAT] = cursor.getString(6)
+                    wordList.add(map)
+                } while (cursor.moveToNext())
+            }
+            Log.e("Pilih Data yang akan dilihat", "" + wordList)
+            database.close()
+            return wordList
         }
-        Log.e("Pilih Data yang akan dilihat", ""+ wordList);
-        database.close();
-        return wordList;
-    }
 
-    public void insert(String nik, String nama, String nohp, String jenis_kelamin, String tgl_sensus, String alamat){
-        SQLiteDatabase database = this.getWritableDatabase();
-        String queryValues = "INSERT INTO " + TABLE_SQLite +
+    fun insert(
+        nik: String,
+        nama: String,
+        nohp: String,
+        jenisKelamin: String,
+        tglSensus: String,
+        alamat: String
+    ) {
+        val database = this.writableDatabase
+        val queryValues = "INSERT INTO " + TABLE_SQLite +
                 " (nik, nama, nohp, jenis_kelamin, tgl_sensus, alamat) " +
                 "VALUES ('" + nik + "', '" + nama +
-                "', '" + nohp + "', '" + jenis_kelamin +
-                "', '" + tgl_sensus + "', '" + alamat + "')";
-        Log.e("Masukkan Data", ""+ queryValues);
-        database.execSQL(queryValues);
-        database.close();
+                "', '" + nohp + "', '" + jenisKelamin +
+                "', '" + tglSensus + "', '" + alamat + "')"
+        Log.e("Masukkan Data", "" + queryValues)
+        database.execSQL(queryValues)
+        database.close()
+    }
+
+    companion object {
+        private const val DATABASE_VERSION = 2
+        const val DATABASE_NAME = "datakeluargabaru2.db"
+        const val TABLE_SQLite = "sqlite"
+        const val COLUMN_ID = "id"
+        const val COLUMN_NIK = "nik"
+        const val COLUMN_NAMA = "nama"
+        const val COLUMN_NOHP = "nohp"
+        const val COLUMN_JENIS_KELAMIN = "jenis_kelamin"
+        const val COLUMN_TANGGAL = "tgl_sensus"
+        const val COLUMN_ALAMAT = "alamat"
     }
 }
